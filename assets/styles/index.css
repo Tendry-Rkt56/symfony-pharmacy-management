@@ -130,6 +130,18 @@ header .auth {
      height:300px;
 }
 
+.form-category {
+     width:500Px;
+     position:fixed;
+     top:50%;
+     left:50%;
+     transform: translate(-50%,-50%);
+     border-radius:4px;
+     box-shadow:0 0 4px rgba(0,0,0,0.2);
+     padding:10px 20px;
+     height:300px;
+}
+
 .forms-update {
      width:400Px;
      position:fixed;

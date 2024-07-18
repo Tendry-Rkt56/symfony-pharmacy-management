@@ -1,0 +1,67 @@
+{% extends "admin.html.twig" %}
+{% block title %} Création de catégorie {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+{% endblock %}
+{% block body %}
+
+     <div class="containers container">
+          <div class='container d-flex align-items-center justify-content-center flex-column'>
+
+                <div class="container my-3">
+                    {% for type, message in app.flashes %}
+                        <div class="d-flex align-items-center justify-content-center alert alert-{{type}}">{{ message | join('') }}</div>
+                    {% endfor %}
+                </div>
+               
+               <div class="container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
+                    <div class="container d-flex align-items-center justify-content-between flex-row">
+                         <h2 class="align-self-start" style="letter-spacing:2px">Les <span style="border-bottom:2px solid rgb(9,181, 9);">cat</span>égories</h2>
+                         <a href="{{path('admin.category.create')}}" class="btn btn-secondary btn-sm">Nouveau</a>
+                    </div>
+                    <form action="" class="gap-2 align-self-start d-flex align-items-center justify-content-center flex-row">
+                         <input id="limit" type="number" class="form-control" value="{{ limit }}" name="limit">
+                         <input value="Valider" type="submit" class="btn btn-sm btn-outline-primary">
+                    </form>
+               </div>
+                                   
+               <table class="container table table-striped table-hover table-bordered">
+                    <thead style="text-align:center;">
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col"></th>
+                         </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                         {% for category in categories %}
+                              <tr>
+                                   <td>{{ category.id }}</td>
+                                   <td>{{ category.nom }}</td>
+                                   <td>
+                                        <div class="d-flex gap-1">
+                                             <a class="btn btn-primary btn-sm" href="{{path('admin.category.edit', {id:category.id})}}">Editer</a>
+                                             <form action="{{path('admin.category.delete', {id: category.id})}}" method="POST">
+                                                  <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
+                                             </form>
+                                        </div>
+                                   </td>
+                              </tr>  
+                         {% endfor %}   
+                    </tbody>
+               </table>
+                         
+               <div class="container my-3 d-flex justify-content-between flex-row gap-1 align-items-center">
+                    <div class="fw-bolder">{{count}} / {{counts}}</div>
+                    <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
+                        {% for i in 1..maxPages %}
+                            {% set class = i == page ? 'btn-primary' : 'btn-outline-primary' %}
+                            <a class="btn {{class}}" href="{{path('admin.category.index', {page: i, limit: limit})}}">{{ i }}</a>                            
+                        {% endfor %}
+                    </div>
+               </div>
+
+          </div>
+     </div>
+
+{% endblock %}

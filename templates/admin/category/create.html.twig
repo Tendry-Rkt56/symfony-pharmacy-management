@@ -1,0 +1,18 @@
+{% extends "admin.html.twig" %}
+{% block title %} Création de catégorie {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+{% endblock %}
+{% block body %}
+
+     <div class="container">
+          <form class="forms d-flex align-items-center justify-content-center flex-row" action="{{path('admin.category.store')}}" method="POST">
+               <div class="d-flex align-items-center justify-content-center flex-row">
+                    <label for="" class="fw-bolder">Nom: </label>
+                    <input type="text" name="nom" placeholder="Nom..." class="form-control">
+               </div>
+               <input type="submit" value="Enregistrer" class="btn btn-primary">
+          </form>
+     </div>
+
+{% endblock %}
