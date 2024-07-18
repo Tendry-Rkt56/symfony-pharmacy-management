@@ -55,6 +55,8 @@ class UserController extends AbstractController
              ->setEmail($request->request->get('email'))
              ->setRoles($roles)
              ->setPassword($hasher->hashPassword($user, $request->request->get('password')))
+             ->setAdresse($request->request->get('adresse'))
+             ->setTelephone($request->request->get('telephone'))
              ->setImage($this->checkImage($request->files->get('image'), $user));
         $this->entity->persist($user);
         $this->entity->flush();
@@ -91,6 +93,8 @@ class UserController extends AbstractController
         $user->setNom($request->request->get('nom'))
              ->setPrenom($request->request->get('prenom'))
              ->setEmail($request->request->get('email'))
+             ->setAdresse($request->request->get('adresse'))
+             ->setTelephone($request->request->get('telephone'))
              ->setRoles($roles)
              ->setPassword($hasher->hashPassword($user, $request->request->get('password')))
              ->setImage($this->checkImage($request->files->get('image'), $user));

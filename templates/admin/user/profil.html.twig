@@ -13,13 +13,13 @@
                    <img src="/image/users/default.jpg" alt="" class="profile-pic" style="border:1px solid green">
                {% endif %}
                <h2>{{user.nom}} {{ user.prenom }}</h2>
-               {# <p><?=$users->adresse?></p> #}
+               <p>{{user.adresse}}</p>
                <p>{{ "ADMIN" in user.roles | join('') | upper ? 'Administrateur' : 'Utilisateur'}}</p>
                <div class="profile-stats">
-                   {# <div>
+                   <div>
                        <span>Téléphone</span>
-                       <p>(+261) <?=$users->telephone?></p>
-                   </div> #}
+                       <p>(+261) {{user.telephone}}</p>
+                   </div>
                    <div>
                        <span>Email</span>
                        <p>{{ user.email }}</p>
