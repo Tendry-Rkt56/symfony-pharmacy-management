@@ -1,0 +1,89 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %} Médicaments {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+{% endblock %}
+{% block name %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="containers container">
+          <div class='container d-flex align-items-center justify-content-center flex-column'>
+
+                <div class="container my-3">
+                    {% for type, message in app.flashes %}
+                        <div class="d-flex align-items-center justify-content-center alert alert-{{type}}">{{ message | join('') }}</div>
+                    {% endfor %}
+                </div>
+               
+               <div class="container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
+                    <div class="container d-flex align-items-center justify-content-between flex-row">
+                         <h2 class="align-self-start" style="letter-spacing:2px">Les <span style="border-bottom:2px solid rgb(9,181, 9);">méd</span>icaments</h2>
+                         <a href="{{path('admin.medicament.create')}}" class="btn btn-secondary btn-sm">Nouveau</a>
+                    </div>
+                    <form action="" class="gap-2 align-self-start d-flex align-items-center justify-content-center flex-row">
+                         <input id="limit" type="number" class="form-control" value="{{ limit }}" name="limit">
+                         <input type="text" class="form-control" name="search" value="{{ search }}" placeholder="Rechercher...">
+                         <select name="category" class="form-select" id="">
+                              <option selected value="1000">Tous</option>
+                         </select>
+                         <input value="Rechercher" type="submit" class="btn btn-sm btn-outline-primary">
+                    </form>
+               </div>
+                                   
+               <table class="container table table-striped table-hover table-bordered">
+                    <thead style="text-align:center;">
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Ordonnance</th>
+                            <th scope="col">Catégorie associée</th>
+                            <th scope="col">Disponibilté</th>
+                            <th scope="col"></th>
+                         </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        {% for medicament in medicaments %}
+                            <tr>
+                                <td>{{ medicament.id }}</td>
+                                <td>{{medicament.nom}}</td>
+                                <td class="fw-bold">{{ medicament.prix | number_format(0, ',', ' ') }} Ar</td>
+                                <td>
+                                    {% if (medicament.ordonnance == 1) %}
+                                        <span class="ordonnance requireds">Requise</span>
+                                    {% else %}
+                                        <span class="ordonnance no-required">Sans ordonnance</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align:center;">Pas encore</td>
+                                <td class="text-{{medicament.nombre > 0 ? 'success' : 'danger'}}">{{ medicament.nombre > 0 ? 'Disponible' : 'Indisponible' }}</td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <a class="btn btn-primary btn-sm" href="{{path('admin.medicament.edit', {id:medicament.id})}}">Editer</a>
+                                        <form action="{{path('admin.medicament.delete', {id: medicament.id})}}" method="POST">
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>  
+                        {% endfor %}   
+                    </tbody>
+               </table>
+                         
+               <div class="container my-3 d-flex justify-content-between flex-row gap-1 align-items-center">
+                    <div class="fw-bolder">{{count}} / {{counts}}</div>
+                    <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
+                        {% for i in 1..maxPages %}
+                            {% set class = i == page ? 'btn-primary' : 'btn-outline-primary' %}
+                            <a class="btn {{class}}" href="{{path('admin.medicament', {page: i, search: search, limit: limit})}}">{{ i }}</a>                            
+                        {% endfor %}
+                    </div>
+               </div>
+
+          </div>
+     </div>
+
+{% endblock %}
