@@ -6,6 +6,7 @@
 {% block body %}
      <div class="container">
           {{form_start(form)}}
+               <h2 class="mb-4">Création</h2>
                <div class="container-fluid my-2 row">
                     <div class="col-6 gap-2 d-flex align-items-center justify-content-center flex-row">
                          {{form_label(form.nom)}}
@@ -30,6 +31,12 @@
                               <label class="fw-bolder" for="">Ordonnance non requise: </label>
                               <input type="radio" name="ordonnance" value="0">
                          </div>
+                    </div>
+               </div>
+               <div class="container-fluid my-2 row">
+                    <div class="col-12 gap-2 d-flex align-items-center justify-content-center flex-row">
+                         {{form_label(form.category)}}
+                         {{form_widget(form.category)}}
                     </div>
                </div>
           {{ form_end(form) }}

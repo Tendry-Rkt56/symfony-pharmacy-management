@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Medicament;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
@@ -48,6 +50,17 @@ class MedicamentType extends AbstractType
                 'label_attr' => [
                     'class' => 'fw-bolder',
                 ],
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'Nom',
+                'label' => 'Catégorie associée',
+                'label_attr' => [
+                    'class' => "fw-bolder",
+                ],
+                'attr' => [
+                    'class' => 'form-select'
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

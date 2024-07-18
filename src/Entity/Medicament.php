@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\MedicamentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: MedicamentRepository::class)]
+#[UniqueEntity('nom', message: 'Ce nom existe déjà')]
 class Medicament
 {
     #[ORM\Id]

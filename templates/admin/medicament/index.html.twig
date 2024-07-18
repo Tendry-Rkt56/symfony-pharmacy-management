@@ -27,7 +27,10 @@
                          <input id="limit" type="number" class="form-control" value="{{ limit }}" name="limit">
                          <input type="text" class="form-control" name="search" value="{{ search }}" placeholder="Rechercher...">
                          <select name="category" class="form-select" id="">
-                              <option selected value="1000">Tous</option>
+                              <option {% if (categorySelected == 1000) %} selected {% endif %} value="1000">Tous</option>
+                              {% for category in categories %}
+                                    <option {% if (categorySelected == category.id) %} selected {% endif %} value="{{category.id}}">{{category.nom}}</option>
+                              {% endfor %}
                          </select>
                          <input value="Rechercher" type="submit" class="btn btn-sm btn-outline-primary">
                     </form>
@@ -58,7 +61,7 @@
                                         <span class="ordonnance no-required">Sans ordonnance</span>
                                     {% endif %}
                                 </td>
-                                <td style="text-align:center;">Pas encore</td>
+                                <td style="text-align:center;">{{medicament.category.nom | default('')}}</td>
                                 <td class="text-{{medicament.nombre > 0 ? 'success' : 'danger'}}">{{ medicament.nombre > 0 ? 'Disponible' : 'Indisponible' }}</td>
                                 <td>
                                     <div class="d-flex gap-1">

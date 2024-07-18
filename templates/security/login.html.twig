@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{asset('styles/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('styles/logins.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="left-panel">
+            <h1>WELCOME AGAIN</h1>
+            <p>Lorem ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <div class="right-panel">
+            <div class="login-form">
+                <h2>Connexion</h2>
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+
+                    <button type="submit">
+                        Sign in
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

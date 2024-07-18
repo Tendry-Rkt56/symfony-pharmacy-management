@@ -175,3 +175,20 @@ header .auth {
      border-bottom:2px solid rgb(70, 70, 231);
 }
 
+.randoms {
+     width:100%;
+     display: flex;
+     align-items:center;
+     justify-content:center;
+}
+
+.random {
+     width:30px;height:30px;
+     font-weight:bold;
+     border-radius:50%;
+     font-size:14px;
+     text-align:center;
+     color:white;
+     opacity:0.8;
+}
+

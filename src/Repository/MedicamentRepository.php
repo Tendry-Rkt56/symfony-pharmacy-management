@@ -17,15 +17,22 @@ class MedicamentRepository extends ServiceEntityRepository
         parent::__construct($registry, Medicament::class);
     }
 
-    public function getAll (int $offset, int $limit, ?string $search, ?int $caetegory)
+    public function getAll (int $offset, int $limit, string $search, int $category)
     {
-        return new Paginator($this->createQueryBuilder("m")
-                ->where('m.nom LIKE :search')
-                ->setFirstResult($offset)
-                ->setMaxResults($limit)
-                ->setParameter('search', '%'.$search.'%')
-                ->getQuery()
-                ->setHint(Paginator::HINT_ENABLE_DISTINCT, true)
+        $qb = $this->createQueryBuilder('m')
+            ->select('m', 'c')
+            ->leftJoin('m.category', 'c')
+            ->where('m.nom LIKE :search')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->setParameter('search', '%'.$search.'%');
+        
+        if ($category != 1000) {
+            $qb->andWhere('c.id = :category')
+               ->setParameter('category', $category);
+        }
+        return new Paginator(
+                $qb->getQuery()->setHint(Paginator::HINT_ENABLE_DISTINCT, true)
         );
     }
 

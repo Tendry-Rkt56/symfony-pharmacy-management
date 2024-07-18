@@ -32,6 +32,12 @@
                          </div>
                     </div>
                </div>
+               <div class="container-fluid my-2 row">
+                    <div class="col-12 gap-2 d-flex align-items-center justify-content-center flex-row">
+                         {{form_label(form.category)}}
+                         {{form_widget(form.category)}}
+                    </div>
+               </div>
           {{ form_end(form) }}
      </div>
 {% endblock %}

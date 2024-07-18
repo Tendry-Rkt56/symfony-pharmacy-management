@@ -1,0 +1,38 @@
+{% extends "admin.html.twig" %}
+{% block title %} Profil {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/profil.css')}}">
+{% endblock %}
+{% block body %}
+     <div class="containers">
+        <div class="profile-card">
+            <div class="profile-content">
+               {% if  user.image != null %}
+                   <img src="/image/users/{{user.image}}" alt="" class="profile-pic">
+               {% else %}
+                   <img src="/image/users/default.jpg" alt="" class="profile-pic" style="border:1px solid green">
+               {% endif %}
+               <h2>{{user.nom}} {{ user.prenom }}</h2>
+               {# <p><?=$users->adresse?></p> #}
+               <p>{{ "ADMIN" in user.roles | join('') | upper ? 'Administrateur' : 'Utilisateur'}}</p>
+               <div class="profile-stats">
+                   {# <div>
+                       <span>Téléphone</span>
+                       <p>(+261) <?=$users->telephone?></p>
+                   </div> #}
+                   <div>
+                       <span>Email</span>
+                       <p>{{ user.email }}</p>
+                   </div>
+                   <div>
+                       <span>Facebook</span>
+                       <p>Tendry RKT</p>
+                   </div>
+               </div>
+               {% if app.user.id == user.id %}
+                   <a href="{{path('admin.users.edit')}}" class="show-more">Editer</a>
+               {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

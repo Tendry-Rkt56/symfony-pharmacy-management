@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Medicament;
 use App\Form\MedicamentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin', name: 'admin.')]
+#[IsGranted('ROLE_ADMIN')]
 class MedicamentController extends AbstractController
 {
 
@@ -20,12 +24,13 @@ class MedicamentController extends AbstractController
     }
 
     #[Route('/medicament', name: 'medicament', methods: ['GET'])]
-    public function index(Request $request): Response
+    public function index(Request $request, Security $security): Response
     {
+        // dd($security->getUser()->getEmail());
         $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 2);
+        $limit = $request->query->getInt('limit', 10);
         $search = $request->query->get('search') ?? '';
-        $category = $request->query->get('category');
+        $category = $request->query->getInt('category', 1000);
         $offset = ($page - 1) * $limit;
         $medicaments = $this->entity->getRepository(Medicament::class)->getAll($offset, $limit, $search, $category);
         $maxPages = ceil(count($medicaments) / $limit);
@@ -36,7 +41,9 @@ class MedicamentController extends AbstractController
             'maxPages' => $maxPages,
             'search' => $search,
             'count' => iterator_count($medicaments),
-            'counts' => $medicaments->count()
+            'counts' => $medicaments->count(),
+            'categorySelected' => $category,
+            'categories' => $this->entity->getRepository(Category::class)->findAll()
         ]);
     }
 
@@ -83,7 +90,7 @@ class MedicamentController extends AbstractController
         ]);
     }
 
-    #[Route('/medicament/{id}', name: 'medicament.delete', methods: ['POST'])]
+    #[Route('/medicament/delete/{id}', name: 'medicament.delete', methods: ['POST'])]
     public function delete (Medicament $medicament)
     {
         $this->entity->remove($medicament);
