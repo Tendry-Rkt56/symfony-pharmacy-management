@@ -1,11 +1,11 @@
 {% extends "admin.html.twig" %}
 {% block title %} Création de catégorie {% endblock %}
 {% block stylesheets %}
-     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/contente.css')}}">
 {% endblock %}
 {% block body %}
 
-     <div class="container">
+     <div class="containers container">
           <form class="forms d-flex align-items-center justify-content-center flex-row" action="{{path('admin.category.update', {id:category.id})}}" method="POST">
                <div class="d-flex align-items-center justify-content-center flex-row">
                     <label for="" class="fw-bolder">Nom: </label>

@@ -1,8 +1,8 @@
-{% extends 'admin.html.twig' %}
+{% extends 'user.html.twig' %}
 
 {% block title %} Médicaments {% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{asset('styles/content.css')}}">
+    <link rel="stylesheet" href="{{asset('styles/index.css')}}">
 {% endblock %}
 {% block name %}
 
@@ -45,7 +45,6 @@
                             <th scope="col">Ordonnance</th>
                             <th scope="col">Catégorie associée</th>
                             <th scope="col">Disponibilté</th>
-                            <th scope="col"></th>
                          </tr>
                     </thead>
                     <tbody style="text-align: center;">
@@ -63,14 +62,6 @@
                                 </td>
                                 <td style="text-align:center;">{{medicament.category.nom | default('')}}</td>
                                 <td class="text-{{medicament.nombre > 0 ? 'success' : 'danger'}}">{{ medicament.nombre > 0 ? 'Disponible' : 'Indisponible' }}</td>
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <a class="btn btn-primary btn-sm" href="{{path('admin.medicament.edit', {id:medicament.id})}}">Editer</a>
-                                        <form action="{{path('admin.medicament.delete', {id: medicament.id})}}" method="POST">
-                                            <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
-                                        </form>
-                                    </div>
-                                </td>
                             </tr>  
                         {% endfor %}   
                     </tbody>
@@ -81,7 +72,7 @@
                     <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
                         {% for i in 1..maxPages %}
                             {% set class = i == page ? 'btn-primary' : 'btn-outline-primary' %}
-                            <a class="btn {{class}}" href="{{path('admin.medicament', {page: i, search: search, limit: limit})}}">{{ i }}</a>                            
+                            <a class="btn {{class}}" href="{{path('users.medicament', {page: i, search: search, limit: limit})}}">{{ i }}</a>                            
                         {% endfor %}
                     </div>
                </div>

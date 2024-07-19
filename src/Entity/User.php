@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,6 +47,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100)]
     private ?string $telephone = null;
+
+    /**
+     * @var Collection<int, Vente>
+     */
+    #[ORM\OneToMany(targetEntity: Vente::class, mappedBy: 'user')]
+    private Collection $ventes;
+
+    public function __construct()
+    {
+        $this->ventes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -177,6 +190,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vente>
+     */
+    public function getVentes(): Collection
+    {
+        return $this->ventes;
+    }
+
+    public function addVente(Vente $vente): static
+    {
+        if (!$this->ventes->contains($vente)) {
+            $this->ventes->add($vente);
+            $vente->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVente(Vente $vente): static
+    {
+        if ($this->ventes->removeElement($vente)) {
+            // set the owning side to null (unless already changed)
+            if ($vente->getUser() === $this) {
+                $vente->setUser(null);
+            }
+        }
 
         return $this;
     }

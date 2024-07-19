@@ -17,6 +17,15 @@ class MedicamentRepository extends ServiceEntityRepository
         parent::__construct($registry, Medicament::class);
     }
 
+    public function getWithSearch(string $search)
+    {
+        return $this->createQueryBuilder("m")
+                ->where('m.nom LIKE :search')
+                ->setParameter("search", '%'.$search.'%')
+                ->getQuery()
+                ->getResult();
+    }
+
     public function getAll (int $offset, int $limit, string $search, int $category)
     {
         $qb = $this->createQueryBuilder('m')

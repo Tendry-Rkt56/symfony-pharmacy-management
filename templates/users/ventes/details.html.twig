@@ -1,0 +1,53 @@
+{% extends "user.html.twig" %}
+{% block title %} Vente N° {{vente.id}} {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/details.css')}}">
+{% endblock %}
+{% block body %}
+     <div class="invoice-box">
+          <header>
+              <h1>FACTURE</h1>
+              <div class="invoice-info">
+                 <div class="invoice-number">Facture n°{{ vente.id }}</div>
+                 <div class="invoice-date">{{ vente.createdAt | date }}</div>
+              </div>
+          </header>
+          <section class="address-info">
+              <div class="from">
+                 <h2>{{ vente.user.nom }} {{ vente.user.prenom }}</h2>
+                 {{ vente.user.email }}<br>
+                 {{ vente.user.adresse }}</p>
+              </div>
+          </section>
+          <section class="invoice-details">
+              <table>
+                  <thead>
+                      <tr>
+                          <th>MEDICAMENT</th>
+                          <th>PRIX</th>
+                          <th>QUANTITÉ</th>
+                          <th>TOTAL</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for detail in details %}
+                           <tr>
+                                <td>{{detail.medicament.nom}}</td>
+                                <td>{{detail.medicament.prix}}</td>
+                                <td>{{ detail.nombre }}</td>
+                                {% set total = detail.nombre * detail.medicament.prix %}
+                                <td class="fw-bolder">{{ total | number_format(0, ',', ' ') }} Ar</td>
+                           </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </section>
+          <section class="totals">
+              <p class="total">TOTAL : <span>{{ vente.total }} Ar</span></p>
+          </section>
+          <footer>
+              <p class="thanks">MERCI DE VOTRE CONFIANCE</p>
+          </footer>
+     </div>
+    <script src="{{asset('script/facture.js')}}"></script>
+{% endblock %}

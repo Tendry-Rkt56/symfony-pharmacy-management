@@ -12,7 +12,7 @@ const select = document.getElementById('select')
 
 if (select) {
 	select.addEventListener('change', (e) => {
-		if (e.target.value == "admin") window.location.href = "/"
-		else window.location.href = "/users"
+		if (e.target.value == "admin") window.location.href = "/admin/medicament"
+		else window.location.href = "/users/medicament"
 	})
 }	

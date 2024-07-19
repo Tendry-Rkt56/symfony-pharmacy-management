@@ -1,0 +1,50 @@
+{% extends "user.html.twig" %}
+{% block title %} Liste des ventes {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+{% endblock %}
+{% block body %}
+
+     <div class="containers container">
+          <div class='container d-flex align-items-center justify-content-center flex-column'>
+      
+               <div class="container my-3">
+                    {% for type, message in app.flashes %}
+                        <div class="d-flex align-items-center justify-content-center alert alert-{{type}}">{{ message | join('') }}</div>
+                    {% endfor %}
+               </div>
+
+               <div class="container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
+                    <div class="container d-flex align-items-center justify-content-between flex-row">
+                         <h2 class="align-self-start" style="letter-spacing:2px">Les <span style="border-bottom:2px solid rgb(9,181, 9);">ve</span>ntes</h2>
+                         <a href="{{path('users.ventes.create')}}" class="btn btn-secondary">Nouveau</a>
+                    </div>
+               </div>
+                                   
+               <table class="container table table-striped table-hover table-bordered">
+                    <thead style="text-align:center;">
+                         <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Date</th>
+                         </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                         {% for vente in ventes %}
+                              <tr>
+                                   <td>{{ vente.id }}</td>
+                                   <td class="fw-bold">{{ vente.total | number_format(0, ',', ' ') }}</td>
+                                   <td>{{ vente.createdAt | date }}</td>
+                                   <td>
+                                        <a href="{{ path('users.details', {id: vente.id}) }}" class="btn btn-sm btn-primary">Détails</a>
+                                   </td>
+                              </tr>  
+                         {% endfor %}   
+                    </tbody>
+               </table>
+
+          </div>
+     </div>
+
+{% endblock %}
+     

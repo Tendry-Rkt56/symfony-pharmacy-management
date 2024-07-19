@@ -2,9 +2,10 @@
 {% block title %} Profil {% endblock %}
 {% block stylesheets %}
      <link rel="stylesheet" href="{{asset('styles/profil.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/content.css')}}">
 {% endblock %}
 {% block body %}
-     <div class="containers">
+     <div class="profil">
         <div class="profile-card">
             <div class="profile-content">
                {% if  user.image != null %}

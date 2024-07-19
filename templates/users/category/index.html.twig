@@ -1,11 +1,11 @@
-{% extends "admin.html.twig" %}
+{% extends "user.html.twig" %}
 {% block title %} Création de catégorie {% endblock %}
 {% block stylesheets %}
-     <link rel="stylesheet" href="{{asset('styles/content.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
 {% endblock %}
 {% block body %}
 
-     <div class="containers container">
+     <div class="containers container-sm">
           <div class='container d-flex align-items-center justify-content-center flex-column'>
 
                 <div class="container my-3">
@@ -30,7 +30,6 @@
                          <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nom</th>
-                            <th scope="col"></th>
                          </tr>
                     </thead>
                     <tbody style="text-align: center;">
@@ -38,14 +37,6 @@
                               <tr>
                                    <td>{{ category.id }}</td>
                                    <td>{{ category.nom }}</td>
-                                   <td>
-                                        <div class="d-flex gap-1">
-                                             <a class="btn btn-primary btn-sm" href="{{path('admin.category.edit', {id:category.id})}}">Editer</a>
-                                             <form action="{{path('admin.category.delete', {id: category.id})}}" method="POST">
-                                                  <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
-                                             </form>
-                                        </div>
-                                   </td>
                               </tr>  
                          {% endfor %}   
                     </tbody>
@@ -56,7 +47,7 @@
                     <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
                         {% for i in 1..maxPages %}
                             {% set class = i == page ? 'btn-primary' : 'btn-outline-primary' %}
-                            <a class="btn {{class}}" href="{{path('admin.category.index', {page: i, limit: limit})}}">{{ i }}</a>                            
+                            <a class="btn {{class}}" href="{{path('users.categories', {page: i, limit: limit})}}">{{ i }}</a>                            
                         {% endfor %}
                     </div>
                </div>

@@ -1,7 +1,7 @@
-{% extends "admin.html.twig" %}
+{% extends "user.html.twig" %}
 {% block title %} Les utilisateurs {% endblock %}
 {% block stylesheets %}
-     <link rel="stylesheet" href="{{asset('styles/content.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
 {% endblock %}
 {% block body %}
 
@@ -34,8 +34,7 @@
                               <th scope="col">Nom</th>
                               <th scope="col">Prénom</th>
                               <th scope="col">Email</th>
-                              <th scope="col">Rôle</th>
-                              <th scope="col"></th>
+                              <th scope="col">Adresse</th>
                          </tr>
                     </thead>
                     <tbody style="text-align: center;">
@@ -58,21 +57,7 @@
                                    <td>{{ user.nom }}</td>
                                    <td>{{ user.prenom }}</td>
                                    <td>{{ user.email }}</td>
-                                   <td>
-                                        {% if ("ADMIN" in user.roles | join('') | upper) %}
-                                             <span class="ordonnance no-required">Administrateur</span>
-                                        {% else %}
-                                             <span class="ordonnance requireds">Utilisateur</span>
-                                        {% endif %}
-                                   </td>
-                                   <td>
-                                        <div class="d-flex">
-                                             <a href="{{path('admin.users.profil', {id: user.id})}}" class="mx-1 btn btn-sm btn-primary">Profil</a>
-                                             <form action="{{path('admin.users.delete', {id: user.id})}}" method="POST">
-                                                  <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
-                                             </form>
-                                        </div>
-                                   </td>
+                                   <td>{{ user.adresse | default('') }}</td>
                               </tr>  
                          {% endfor %}   
                     </tbody>
@@ -82,7 +67,7 @@
                     <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
                         {% for i in 1..maxPages %}
                             {% set class = i == page ? 'btn-primary' : 'btn-outline-primary' %}
-                            <a class="btn {{class}}" href="{{path('admin.users.index', {page: i, search: search, limit: limit})}}">{{ i }}</a>                            
+                            <a class="btn {{class}}" href="{{path('users.listes', {page: i, search: search, limit: limit})}}">{{ i }}</a>                            
                         {% endfor %}
                     </div>
                </div>

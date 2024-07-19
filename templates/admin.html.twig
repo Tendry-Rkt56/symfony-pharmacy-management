@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{asset('styles/bootstrap.min.css')}}">
-        <link rel="stylesheet" href="{{asset('styles/header.css')}}">
-        <script src="{{asset('script/header.js')}}" defer></script>
-        {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        
-        {% set vert = random(range(0, 255)) %}
-        {% set rouge = random(range(0, 255)) %}
-        {% set blue = random(range(0, 255)) %}
-        {% set color = "rgb("~ vert ~", " ~ rouge ~", "~ blue ~")" %}
-        
-        <header class="home-section">
- 	        <div class="sidebar-button">
-             	<i class="bx bx-menu sidebarBtn"></i>
-             	<h3><span class="dashboard">PHA</span>RM</h3>
-             </div>
-	        {% if is_granted('ROLE_ADMIN') %}
-                  <form action="">
-	        		<select name="" id="select" class="form-select">
-	        			<option value="" disabled>Séléctionner en un</option>
-	        			<option {% if (app.current_route starts with 'admin')%} selected {% endif %} value="admin">Administrateur</option>
-	        			<option {% if (app.current_route starts with 'users') %} selected {% endif %} value="users">Utilisateur</option>
-	        		</select>
-	        	</form>
-             {% endif %}
-             
-	        <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
-                <a class="liens {{ app.current_route == "admin.index" ? 'active' : ''}}" href="/users">Accueil</a>
-                <a class="liens {{ 'medicament' in app.current_route ? 'active' : '' }}" href="{{path('admin.medicament')}}">Médicaments</a>
-	        	<a class="liens {{ 'category' in app.current_route ? 'active' : '' }}" href="{{path('admin.category.index')}}">Catégories</a>
-	        	<a class="liens {{ 'admin.users' in app.current_route ? 'active' : '' }}" href="{{path('admin.users.index')}}">Utilisateurs</a>
-	        	{# <a class="liens {{ 'admin.ventes' in app.current_route ? 'active' : '' }}" href="{{path('admin.ventes')}}">Ventes</a> #}
-	        </div>
-             {% if app.user %}
-                  <form action="{{path('app.logout')}}" method="POST">
-                       <input type="submit" class="btn btn-danger" value="Se déconnecter">
-                  </form>
-                  <a style="text-decoration:none;" href="{{path('admin.users.profil', {id: app.user.id})}}" class="profile-details">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <link rel="stylesheet" href="{{asset('styles/admin.css')}}">
+    <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+    <link rel="stylesheet" href="{{asset('styles/bootstrap.min.css')}}">
+    {% block stylesheets %}
+    {% endblock %}
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+	<div class="sidebar">
+          <div class="logo">
+               <h2>ADMIN</h2>
+          </div>
+          <nav>
+               <ul>
+                   	<li class="lien"><a href="/">Accueil</a></li>
+                    <li class="lien {{"medicament" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.medicament')}}">Médicaments</a></li>
+          	     <li class="lien {{"category" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.category.index')}}">Catégories</a></li>
+          	     <li class="lien {{"users" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.users.index')}}">Utilisateurs</a></li>
+          	     <li class="lien {{"ventes" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.ventes.index')}}">Ventes</a></li>
+			     <li>
+				     <form action="/logout" method="POST">
+					    <input type="submit" value="Déconnexion" class="btn btn-danger">
+				     </form>
+			     </li>
+          	</ul>
+          </nav>
+     </div>	
+     <section class="home-section">
+          <nav>
+               <div class="sidebar-button">
+                    <i class="bx bx-menu sidebarBtn"></i>
+                    <h3><span class="dashboard">PHA</span>RM</h3>
+               </div>
+               <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
+                    <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="/">Administration</a>
+                    <a class="liens {{"user" in app.current_route ? 'active': ''}}" href="{{path('users.medicament')}}">Utilisateur</a>
+               </div>
+               <a style="text-decoration:none;" href="" class="profile-details">
                     {% if app.user.image %}
-	        	     	<img src="/image/users/{{app.user.image}}" alt="" />
-	        	    {% else %}
-	        	     	<div class="randoms">
-                            <span class="random d-flex align-items-center justify-content-center" style="background:{{color}}">{{ app.user.nom | slice(0, 1) }}</span>
-                        </div>
+                         <img src="/image/users/{{app.user.image}}" alt=""/>
+                    {% else %}
+                    
+                    {% set vert = random(range(0, 255)) %}
+                    {% set rouge = random(range(0, 255)) %}
+                    {% set blue = random(range(0, 255)) %}
+                    {% set color = "rgb("~ vert ~", " ~ rouge ~", "~ blue ~")" %}
+                         
+                         <div class="randoms">
+                              <span class="random d-flex align-items-center justify-content-center" style="background:{{color}};">{{ app.user.nom | slice(0, 1) | upper }}</span>
+                         </div>
                     {% endif %}
-             	     <span class="admin_name">{{ app.user.nom }} {{ app.user.prenom }}</span>
-             	     <i class="bx bx-chevron-down"></i>
-                  </a>
-             {% endif %}
-             
-        </header>
-        {% block body %}{% endblock %}
-    </body>
+                    <span class="admin_name">{{app.user.nom}} {{app.user.prenom}}</span>
+                    <i class="bx bx-chevron-down"></i>
+               </a>
+          </nav>
+     </section>
+
+     {% block body %}{% endblock %}
+</body>
 </html>

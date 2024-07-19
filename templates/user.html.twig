@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{asset('styles/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('styles/header.css')}}">
+        <script src="{{asset('script/header.js')}}" defer></script>
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        
+        {% set vert = random(range(0, 255)) %}
+        {% set rouge = random(range(0, 255)) %}
+        {% set blue = random(range(0, 255)) %}
+        {% set color = "rgb("~ vert ~", " ~ rouge ~", "~ blue ~")" %}
+        
+        <header class="home-section">
+ 	        <div class="sidebar-button">
+             	<i class="bx bx-menu sidebarBtn"></i>
+             	<h3><span class="dashboard">PHA</span>RM</h3>
+             </div>
+	        {% if is_granted('ROLE_ADMIN') %}
+                  <form id="form-nav" action="">
+	        		<select name="" id="select" class="form-select">
+	        			<option value="" disabled>Séléctionner en un</option>
+	        			<option {% if (app.current_route starts with 'admin')%} selected {% endif %} value="admin">Administrateur</option>
+	        			<option {% if (app.current_route starts with 'users') %} selected {% endif %} value="users">Utilisateur</option>
+	        		</select>
+	        	</form>
+             {% endif %}
+             
+	        <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
+                <a class="liens {{ app.current_route == "admin.index" ? 'active' : ''}}" href="/users">Accueil</a>
+                <a class="liens {{ 'medicament' in app.current_route ? 'active' : '' }}" href="{{path('users.medicament')}}">Médicaments</a>
+	        	<a class="liens {{ 'categories' in app.current_route ? 'active' : '' }}" href="{{path('users.categories')}}">Catégories</a>
+	        	<a class="liens {{ 'listes' in app.current_route ? 'active' : '' }}" href="{{path('users.listes')}}">Utilisateurs</a>
+	        	<a class="liens {{ 'ventes' in app.current_route ? 'active' : '' }}" href="{{path('users.ventes')}}">Ventes</a>
+	        	{# <a class="liens {{ 'admin.ventes' in app.current_route ? 'active' : '' }}" href="{{path('admin.ventes')}}">Ventes</a> #}
+	        </div>
+             {% if app.user %}
+                  <form action="{{path('app.logout')}}" method="POST">
+                       <input type="submit" class="btn btn-danger" value="Se déconnecter">
+                  </form>
+                  <a style="text-decoration:none;" href="{{path('admin.users.profil', {id: app.user.id})}}" class="profile-details">
+                    {% if app.user.image %}
+	        	     	<img src="/image/users/{{app.user.image}}" alt="" />
+	        	    {% else %}
+	        	     	<div class="randoms">
+                            <span class="random d-flex align-items-center justify-content-center" style="background:{{color}}">{{ app.user.nom | slice(0, 1) }}</span>
+                        </div>
+                    {% endif %}
+             	     <span class="admin_name">{{ app.user.nom }} {{ app.user.prenom }}</span>
+             	     <i class="bx bx-chevron-down"></i>
+                  </a>
+             {% endif %}
+             
+        </header>
+        {% block body %}{% endblock %}
+    </body>
+</html>

@@ -2,11 +2,11 @@
 {% block title %} Création utilisateur {% endblock %}
 {% block stylesheets %}
      <link rel="stylesheet" href="{{asset('styles/register.css')}}">
-     <link rel="stylesheet" href="{{asset('styles/index.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/content.css')}}">
 {% endblock %}
 {% block body %}
 
-     <div class="registration container">
+     <div class="registration container containers">
           <div class="wrapper">
                <h2>Edition</h2>
                <form action="{{path('admin.users.update')}}" method="POST" id="form" enctype="multipart/form-data">
