@@ -6,9 +6,12 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreRemove;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[HasLifecycleCallbacks]
 #[UniqueEntity('nom', message: 'Ce nom existe déjà')]
 class Category
 {
@@ -46,6 +49,14 @@ class Category
         $this->nom = $nom;
 
         return $this;
+    }
+
+    #[PreRemove]
+    public function preRemove()
+    {
+        foreach($this->medicaments as  $medicament) {
+            $medicament->setCategory(null);
+        }
     }
 
     /**

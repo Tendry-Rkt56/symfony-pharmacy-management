@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Event\DeleteUserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,9 +108,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
-    public function delete (User $user)
+    public function delete (User $user, EventDispatcherInterface $dispatcher)
     {
         $this->deleteImage($user);
+        $dispatcher->dispatch(new DeleteUserEvent($user));
         $this->entity->remove($user);
         $this->entity->flush();
         $this->addFlash('danger', 'Utilisateur supprimé');
@@ -126,7 +129,7 @@ class UserController extends AbstractController
     private function deleteImage (User $user): void
     {
         if ($user->getImage() !== null) {
-            $path = $this->getParameter('kernel.project_dir').'/public/user/'.$user->getImage();
+            $path = $this->getParameter('kernel.project_dir').'/public/users/'.$user->getImage();
             if (file_exists($path)) {
                 unlink($path);
             }

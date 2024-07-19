@@ -26,7 +26,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,13 +36,13 @@ CREATE TABLE `category` (
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 INSERT INTO `category` VALUES
-(1,'Analgésiques'),
 (2,'Antibiotiques   '),
 (4,'Antihypertenseurs'),
 (5,'Antidiabétiques'),
 (6,'Suppléments Vitaminiques'),
 (7,'Antiviraux   '),
-(8,'Antihistaminiques');
+(8,'Antihistaminiques'),
+(9,'Analgésique');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `detail` (
   KEY `IDX_2E067F937DC7170A` (`vente_id`),
   CONSTRAINT `FK_2E067F937DC7170A` FOREIGN KEY (`vente_id`) REFERENCES `vente` (`id`),
   CONSTRAINT `FK_2E067F93AB0D61F7` FOREIGN KEY (`medicament_id`) REFERENCES `medicament` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,15 +73,14 @@ CREATE TABLE `detail` (
 LOCK TABLES `detail` WRITE;
 /*!40000 ALTER TABLE `detail` DISABLE KEYS */;
 INSERT INTO `detail` VALUES
-(19,1,8,10),
-(20,6,8,10),
-(21,1,9,10),
-(22,6,9,20),
-(23,6,10,2),
-(24,4,10,1),
-(25,1,11,8),
-(26,2,11,8),
-(27,1,12,1200);
+(28,1,13,5),
+(29,6,13,2),
+(30,2,13,2),
+(31,8,14,12),
+(32,9,15,20),
+(33,1,15,10000),
+(34,6,16,4),
+(35,2,16,2);
 /*!40000 ALTER TABLE `detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,14 +143,14 @@ CREATE TABLE `medicament` (
 LOCK TABLES `medicament` WRITE;
 /*!40000 ALTER TABLE `medicament` DISABLE KEYS */;
 INSERT INTO `medicament` VALUES
-(1,'Paracétamol',1200,10800,0,1),
-(2,'Vitamine D',2500,12000,0,6),
+(1,'Paracétamol',1200,10114,0,9),
+(2,'Vitamine D',2500,11996,0,6),
 (3,'Vitamine C',2600,1200,0,6),
 (4,'Amoxilline',1500,1200,0,2),
-(6,'Lisinopril',8000,285,1,4),
-(8,'Cetirizine',2700,1205,0,8),
-(9,'Ciprofloxacine',7000,5800,1,2),
-(10,'Metformine',4000,0,1,5);
+(6,'Lisinopril',8000,2790,1,4),
+(8,'Cetirizine',2700,1193,0,8),
+(9,'Ciprofloxacine',7000,5780,1,2),
+(10,'Metformine',4000,100001,1,5);
 /*!40000 ALTER TABLE `medicament` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +204,7 @@ CREATE TABLE `user` (
   `telephone` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,8 +214,9 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES
-(1,'tendry@gmail.com','[\"ROLE_ADMIN\"]','$2y$13$UijfwyQb/.OB6wpOCOEMTuuTUr4OfrnB7eCG/R0c/JPa7UI4mgSKq','Tendry','Rkt','82549f4e26330467d27cc3e4bbd4026f.jpg','Antananarivo, Ankaraobato','0346413187'),
-(5,'eric@gmail.com','[]','$2y$13$3ovIC9WkFs35t7QQktvGV.9gtOO3JiCk1FX0iPPbNqI6l7Zvqoe/O','Eric','','9bb0f4341838119829cc94fae84e23ab.jpg','Mandraka, Mandraka','0321212021');
+(9,'admin01@gmail.com','[\"ROLE_ADMIN\"]','$2y$13$TnXVAxDhMLXCH6MkBa0xweCDYLo4PtYHDjb4.95dFpLCw/qAkt.yi','admin','01','921ca1b9c33105fcf44d86e6ab2738ba.jpg','Mahamasina, Antananarivo','0341200220'),
+(10,'user01@gmail.com','[]','$2y$13$oNgRAz5VoriNU1CfqFCGreR5AO9DNb9MySf/Wa.CvmlMNA6oZr0Na','user','01','21f5fe4ac0143e554ca5e408c684d687.jpg','Dans ton coeur','0331260000'),
+(11,'user02@gmail.com','[]','$2y$13$TM5TiZUFpuDvWaD6otFmRuyJ/1ySAwpG.ePgbbPZwOFBqi0KhkOTm','user','02',NULL,'Dans le monde, Terre','0331258545');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +235,7 @@ CREATE TABLE `vente` (
   PRIMARY KEY (`id`),
   KEY `IDX_888A2A4CA76ED395` (`user_id`),
   CONSTRAINT `FK_888A2A4CA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,11 +245,10 @@ CREATE TABLE `vente` (
 LOCK TABLES `vente` WRITE;
 /*!40000 ALTER TABLE `vente` DISABLE KEYS */;
 INSERT INTO `vente` VALUES
-(8,1,92000,'2024-07-19 03:36:05'),
-(9,1,172000,'2024-07-19 04:05:27'),
-(10,5,17500,'2024-07-19 07:32:39'),
-(11,5,29600,'2024-07-19 07:56:08'),
-(12,5,1440000,'2024-07-19 08:01:44');
+(13,10,27000,'2024-07-19 14:11:16'),
+(14,10,32400,'2024-07-19 14:12:33'),
+(15,9,12140000,'2024-07-19 14:20:02'),
+(16,11,37000,'2024-07-19 14:23:47');
 /*!40000 ALTER TABLE `vente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -262,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-19  8:07:27
+-- Dump completed on 2024-07-19 14:27:20

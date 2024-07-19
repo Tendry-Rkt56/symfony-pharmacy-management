@@ -42,7 +42,7 @@
                {% if is_granted('ROLE_ADMIN') %}
                     <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
                          <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="{{path('admin.index')}}">Administration</a>
-                         <a class="liens {{"users.index" in app.current_route ? 'active': ''}}" href="{{path('users.index')}}">Utilisateur</a>
+                         <a class="liens {{"users.index" == app.current_route ? 'active': ''}}" href="{{path('users.index')}}">Utilisateur</a>
                     </div>
                {% endif %}
                
