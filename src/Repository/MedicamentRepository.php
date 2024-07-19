@@ -45,6 +45,15 @@ class MedicamentRepository extends ServiceEntityRepository
         );
     }
 
+    public function getMedInVente(array $data = [])
+    {
+        return $this->getEntityManager()->createQuery("SELECT m FROM App\Entity\Medicament m
+            WHERE m.id IN (:data)
+        ")
+        ->setParameter('data', $data)
+        ->getResult();
+    }
+
     //    /**
     //     * @return Medicament[] Returns an array of Medicament objects
     //     */

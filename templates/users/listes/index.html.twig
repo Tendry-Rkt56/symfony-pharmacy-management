@@ -17,7 +17,6 @@
                <div class="container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
                     <div class="container d-flex align-items-center justify-content-between flex-row">
                          <h2 class="align-self-start" style="letter-spacing:2px;">Les <span style="border-bottom:2px solid rgb(19,181,19);">uti</span>lisateurs</h2>
-                         <a href="{{path('admin.users.create')}}" class="btn btn-secondary btn-sm">Nouveau</a>
                     </div>
                     <form action="" class="gap-2 align-self-start d-flex align-items-center justify-content-center flex-row">
                          <input id="limit" type="number" class="form-control" value="{{ limit }}" name="limit">
@@ -35,6 +34,7 @@
                               <th scope="col">Prénom</th>
                               <th scope="col">Email</th>
                               <th scope="col">Adresse</th>
+                              <th></th>
                          </tr>
                     </thead>
                     <tbody style="text-align: center;">
@@ -58,6 +58,9 @@
                                    <td>{{ user.prenom }}</td>
                                    <td>{{ user.email }}</td>
                                    <td>{{ user.adresse | default('') }}</td>
+                                   <td>
+                                        <a href="{{path('users.profil', {id:user.id})}}" class="btn btn-sm btn-primary">Profil</a>
+                                   </td>
                               </tr>  
                          {% endfor %}   
                     </tbody>

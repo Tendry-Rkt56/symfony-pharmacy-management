@@ -23,7 +23,7 @@
                    	<li class="lien"><a href="/">Accueil</a></li>
                     <li class="lien {{"medicament" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.medicament')}}">Médicaments</a></li>
           	     <li class="lien {{"category" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.category.index')}}">Catégories</a></li>
-          	     <li class="lien {{"users" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.users.index')}}">Utilisateurs</a></li>
+          	     <li class="lien {{"admin.users" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.users.index')}}">Utilisateurs</a></li>
           	     <li class="lien {{"ventes" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.ventes.index')}}">Ventes</a></li>
 			     <li>
 				     <form action="/logout" method="POST">
@@ -39,11 +39,14 @@
                     <i class="bx bx-menu sidebarBtn"></i>
                     <h3><span class="dashboard">PHA</span>RM</h3>
                </div>
-               <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
-                    <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="/">Administration</a>
-                    <a class="liens {{"user" in app.current_route ? 'active': ''}}" href="{{path('users.medicament')}}">Utilisateur</a>
-               </div>
-               <a style="text-decoration:none;" href="" class="profile-details">
+               {% if is_granted('ROLE_ADMIN') %}
+                    <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
+                         <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="/">Administration</a>
+                         <a class="liens {{"users.medicament" in app.current_route ? 'active': ''}}" href="{{path('users.medicament')}}">Utilisateur</a>
+                    </div>
+               {% endif %}
+               
+               <a style="text-decoration:none;" href="{{path('admin.users.profil', {id: app.user.id})}}" class="profile-details">
                     {% if app.user.image %}
                          <img src="/image/users/{{app.user.image}}" alt=""/>
                     {% else %}

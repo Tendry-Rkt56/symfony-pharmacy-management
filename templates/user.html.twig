@@ -47,7 +47,7 @@
                   <form action="{{path('app.logout')}}" method="POST">
                        <input type="submit" class="btn btn-danger" value="Se déconnecter">
                   </form>
-                  <a style="text-decoration:none;" href="{{path('admin.users.profil', {id: app.user.id})}}" class="profile-details">
+                  <a style="text-decoration:none;" href="{{path('users.profil', {id: app.user.id})}}" class="profile-details">
                     {% if app.user.image %}
 	        	     	<img src="/image/users/{{app.user.image}}" alt="" />
 	        	    {% else %}

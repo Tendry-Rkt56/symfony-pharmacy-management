@@ -4,14 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Detail;
 use App\Entity\Vente;
-use App\Event\VenteDeleteEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/ventes', name: 'admin.ventes.')]
+#[IsGranted('ROLE_ADMIN')]
 class VenteController extends AbstractController
 {
 

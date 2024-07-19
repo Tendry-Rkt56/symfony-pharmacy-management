@@ -9,9 +9,11 @@ use App\Entity\User;
 use App\Entity\Vente;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/users', name: 'users.')]
@@ -100,5 +102,61 @@ class UsersController extends AbstractController
              'details' => $details,
              'vente' => $vente,
         ]);
+    }
+
+    //--------------------------------------------------------------------
+
+    #[Route('/profil/{id}', name: 'profil', methods:['GET'])]
+    public function profil (User $user)
+    {
+        return $this->render('users/profil/profil.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/edit', name: 'edit', methods: ['GET'])]
+    public function edit ()
+    {
+        return $this->render('users/profil/edit.html.twig', [
+            'user' => $this->getUser(),
+        ]);
+    }
+
+    private function checkImage (?UploadedFile $file, User $user)
+    {
+        if (!$file instanceof UploadedFile && $user->getImage() == null) return null;
+        elseif (!$file instanceof UploadedFile && $user->getImage() !== null) return $user->getImage();
+        else {
+            $this->deleteImage($user);
+            $fileName = md5(uniqid("user")).'.'.$file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir').'/public/image/users/',$fileName);
+            return $fileName;
+        }
+    }
+
+    #[Route('/edit', name: 'update', methods: ['POST'])]
+    public function update (Request $request, UserPasswordHasherInterface $hasher)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $user->setNom($request->request->get('nom'))
+             ->setPrenom($request->request->get('prenom'))
+             ->setEmail($request->request->get('email'))
+             ->setAdresse($request->request->get('adresse'))
+             ->setTelephone($request->request->get('telephone'))
+             ->setPassword($hasher->hashPassword($user, $request->request->get('password')))
+             ->setImage($this->checkImage($request->files->get('image'), $user));
+        $this->entity->flush();
+        return $this->redirectToRoute('users.profil', ['id' => $user->getId()]);
+    }
+
+    private function deleteImage (User $user): void
+    {
+        if ($user->getImage() !== null) {
+            $path = $this->getParameter('kernel.project_dir').'/public/user/'.$user->getImage();
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
     }
 }

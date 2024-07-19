@@ -33,7 +33,7 @@
                          {% for vente in ventes %}
                               <tr>
                                    <td>{{ vente.id }}</td>
-                                   <td class="fw-bold">{{ vente.total | number_format(0, ',', ' ') }}</td>
+                                   <td class="fw-bold">{{ vente.total | number_format(0, ',', ' ') }} Ar</td>
                                    <td style="text-align:center;">{{ vente.createdAt | date }}</td>
                                    <td>
                                         <div class="d-flex">

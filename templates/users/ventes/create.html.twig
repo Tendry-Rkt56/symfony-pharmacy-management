@@ -7,7 +7,7 @@
 
      <div class="container">
         <h1>Gestion des Ventes de Médicaments</h1>
-        <form id="saleForm" method="POST" action="">
+        <form id="saleForm" method="POST" action="{{path('users.ventes.store')}}">
             <div id="medicamentContainer">
                 <div class="medicament-group">
                     <input required class="premier" type="text" class="medicament" placeholder="Nom du médicament">
@@ -19,7 +19,6 @@
             <button type="button" id="addMedicament">Ajouter un médicament</button>
             <button type="submit">Enregistrer la vente</button>
         </form>
-        <h2>Ventes enregistrées</h2>
         <ul id="salesList"></ul>
     </div>
 

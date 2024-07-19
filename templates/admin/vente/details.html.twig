@@ -43,7 +43,7 @@
               </table>
           </section>
           <section class="totals">
-              <p class="total">TOTAL : <span>{{ vente.total }} Ar</span></p>
+              <p class="total">TOTAL : <span>{{ vente.total | number_format(0, ',', ' ') }} Ar</span></p>
           </section>
           <footer>
               <p class="thanks">MERCI DE VOTRE CONFIANCE</p>

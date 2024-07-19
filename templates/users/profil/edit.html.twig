@@ -1,0 +1,56 @@
+{% extends "user.html.twig" %}
+{% block title %} Edition profil {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/register.css')}}">
+     <link rel="stylesheet" href="{{asset('styles/content.css')}}">
+{% endblock %}
+{% block body %}
+
+     <div class="registration container containers">
+          <div class="wrapper">
+               <h2>Edition</h2>
+               <form action="{{path('users.update')}}" method="POST" id="form" enctype="multipart/form-data">
+                    <div class="container-fluid row">
+                         <div class="col-6 input-box">
+                              <input name="nom" class="form-control" type="text" value="{{ user.nom }}" placeholder="Nom..." required>
+                         </div>
+                         <div class="col-6 input-box">
+                              <input name="prenom" value="{{ user.prenom }}" class="form-control" type="text" placeholder="Prénom...">
+                         </div>
+                    </div>
+                    <div class="row container-fluid">
+                         <div class="col-6 input-box">
+                              <input name="email" value="{{ user.email }}" class="form-control" type="email" placeholder="Email..." required>
+                         </div>
+                         {% if is_granted('ROLE_ADMIN') %}
+                              <div class="col-6 input-box">
+                                   <select style="width:80%" name="roles" id="" class="form-control">
+                                        <option {% if 'ADMIN' in user.roles | join('') | upper %} selected {% endif %}value="admin">Administrateur</option>
+                                        <option {% if 'ADMIN' not in user.roles | join('') | upper %} selected {% endif %} value="user">Utilisateur</option>
+                                   </select>
+                              </div>
+                         {% endif %}
+                    </div>
+                    <div class="container-fluid row">
+                         <div class="col-6 input-box">
+                              <input value="{{user.telephone}}" name="telephone" type="text" placeholder="Téléphone..." required>
+                         </div>
+                         <div class="col-6 input-box">
+                              <input value="{{user.adresse}}" type="text" name="adresse" placeholder="Adresse..." required>
+                         </div>
+                    </div>
+                    <div class="row container-fluid">
+                         <div class="col-6 input-box">
+                              <input name="password" type="password" placeholder="Password..." required>
+                         </div>
+                         <div class="col-6 input-box">
+                              <input type="file" placeholder="Image" class="form-control" name="image">
+                         </div>
+                    </div>
+                    <div class="input-box button">
+                         <input type="Submit" value="Editer">
+                    </div>
+               </form>
+          </div>
+     </div>
+{% endblock %}
