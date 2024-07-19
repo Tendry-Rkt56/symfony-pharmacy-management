@@ -1,0 +1,75 @@
+{% extends "admin.html.twig" %}
+{% block title %} Home ~ Admin {% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('styles/user.css')}}">
+{% endblock %}
+{% block body %}
+
+	<div class="dashboards">
+		<div class="cards">
+     	     <a style="text-decoration: none;" href="{{path('admin.medicament')}}" class="card blue">
+     	         <h3>Médicaments</h3>
+     	         <p>{{ medicaments }}</p>
+     	         <span>Gérer les médicaments</span>
+     	     </a>
+     	     <a style="text-decoration: none;" href="{{path('admin.category.index')}}" class="card light-blue">
+     	         <h3>Catégories</h3>
+     	         <p>{{ categories }}</p>
+     	         <span>Gérer les catégories</span>
+     	     </a>
+     	     <a style="text-decoration: none;" href="{{path('admin.users.index')}}" class="card purple">
+     	         <h3>Utilisateurs</h3>
+     	         <p>{{ users }}</p>
+     	         <span>Gérer les utilisateurs</span>
+     	     </a>
+     	     <a style="text-decoration:none;" href="{{path('admin.ventes.index')}}" class="card green">
+     	         <h3>Ventes</h3>
+			    <i style="color:white">Les 5 dérnières ventes: </i>
+     	         <p class="fw-bolder">{{ total | number_format(0, ',', ' ') }} Ar</p>
+     	         <span>Gérer les ventes</span>
+     	     </a>
+     	</div>
+		<div class="table-data">
+			<div class="order">
+				<div class="head">
+					<h3>Ventes récentes</h3>
+					<i class='bx bx-search' ></i>
+					<i class='bx bx-filter' ></i>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Date Order</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for vente in ventes %}
+							<tr>
+								<td>
+									{% if vente.user.image %}	
+										<img src="/image/users/{{vente.user.image}}" alt="">
+									{% else %}
+										<img src="/image/users/default.jpg" alt="">
+									{% endif %}
+									<p>{{ vente.user.nom }} {{ vente.user.prenom }}</p>
+								</td>
+								<td>{{ vente.createdAt | date}}</td>
+								<td>
+									<span class="status pending">
+										completed
+									</span>
+								</td>
+								<td><a class="btn btn-sm btn-primary" href="{{path('admin.ventes.detail', {id: vente.id})}}">Détails</a></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

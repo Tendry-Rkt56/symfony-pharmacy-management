@@ -16,6 +16,28 @@ class VenteRepository extends ServiceEntityRepository
         parent::__construct($registry, Vente::class);
     }
 
+    public function getSomme()
+    {
+        return $this->createQueryBuilder("v")
+                    ->select("SUM(v.total)")
+                    ->orderBy("v.id", "DESC")
+                    ->setMaxResults(5)
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+
+    public function getLastVente()
+    {
+        return $this->createQueryBuilder("v")
+                    ->select("v", "u")
+                    ->innerJoin("v.user", 'u')
+                    ->orderBy("v.id", "DESC")
+                    ->setMaxResults(5)
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
     //    /**
     //     * @return Vente[] Returns an array of Vente objects
     //     */

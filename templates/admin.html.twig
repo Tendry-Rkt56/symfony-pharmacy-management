@@ -20,7 +20,7 @@
           </div>
           <nav>
                <ul>
-                   	<li class="lien"><a href="/">Accueil</a></li>
+                   	<li class="lien {{"admin.index" == app.current_route ? 'active' : '' }}"><a href="{{path('admin.index')}}">Accueil</a></li>
                     <li class="lien {{"medicament" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.medicament')}}">Médicaments</a></li>
           	     <li class="lien {{"category" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.category.index')}}">Catégories</a></li>
           	     <li class="lien {{"admin.users" in app.current_route ? 'active' : ''}}"><a href="{{path('admin.users.index')}}">Utilisateurs</a></li>
@@ -41,8 +41,8 @@
                </div>
                {% if is_granted('ROLE_ADMIN') %}
                     <div class="admins d-flex align-items-center justify-content-center flex-row gap-3">
-                         <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="/">Administration</a>
-                         <a class="liens {{"users.medicament" in app.current_route ? 'active': ''}}" href="{{path('users.medicament')}}">Utilisateur</a>
+                         <a class="liens {{"admin" in app.current_route ? 'active': ''}}" href="{{path('admin.index')}}">Administration</a>
+                         <a class="liens {{"users.index" in app.current_route ? 'active': ''}}" href="{{path('users.index')}}">Utilisateur</a>
                     </div>
                {% endif %}
                

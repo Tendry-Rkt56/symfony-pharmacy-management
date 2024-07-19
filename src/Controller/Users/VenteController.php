@@ -5,6 +5,7 @@ namespace App\Controller\Users;
 use App\Entity\Medicament;
 use App\Entity\Vente;
 use App\Event\StoreVenteEvent;
+use App\Event\UpdateMedicamentEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -63,6 +64,7 @@ class VenteController extends AbstractController
         $this->entity->persist($vente);
         $this->entity->flush();
         $dispatcher->dispatch(new StoreVenteEvent($vente, $data));
+        $dispatcher->dispatch(new UpdateMedicamentEvent($data));
         return $this->redirectToRoute("users.details", ['id' => $vente->getId()]);
     }
 }

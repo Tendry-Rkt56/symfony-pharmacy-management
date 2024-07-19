@@ -50,10 +50,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         if ($this->security->isGranted('ROLE_ADMIN')) {
-            return new RedirectResponse($this->urlGenerator->generate('admin.medicament'));
+            return new RedirectResponse($this->urlGenerator->generate('admin.index'));
         }
         elseif ($this->security->isGranted('ROLE_USER')) {
-            return new RedirectResponse($this->urlGenerator->generate('admin.category.index'));
+            return new RedirectResponse($this->urlGenerator->generate('users.index'));
         }
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

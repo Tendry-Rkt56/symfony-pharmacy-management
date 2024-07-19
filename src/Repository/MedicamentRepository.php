@@ -21,6 +21,7 @@ class MedicamentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder("m")
                 ->where('m.nom LIKE :search')
+                ->andWhere("m.nombre > 0")
                 ->setParameter("search", '%'.$search.'%')
                 ->getQuery()
                 ->getResult();
@@ -52,6 +53,14 @@ class MedicamentRepository extends ServiceEntityRepository
         ")
         ->setParameter('data', $data)
         ->getResult();
+    }
+
+    public function medicamentNumber()
+    {
+        return (int)$this->createQueryBuilder("m")
+                ->select("COUNT(m)")
+                ->getQuery()
+                ->getSingleScalarResult();
     }
 
     //    /**

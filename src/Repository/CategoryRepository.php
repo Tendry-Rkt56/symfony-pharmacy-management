@@ -28,6 +28,14 @@ class CategoryRepository extends ServiceEntityRepository
         );
     }
 
+    public function categoryNumber()
+    {
+        return (int)$this->createQueryBuilder("c")
+                    ->select("COUNT(c)")
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */
