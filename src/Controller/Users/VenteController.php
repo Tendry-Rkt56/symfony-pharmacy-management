@@ -12,8 +12,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/users/vente', name: 'users.ventes.')]
+#[IsGranted('ROLE_USER')]
 class VenteController extends AbstractController
 {
 
@@ -34,7 +36,12 @@ class VenteController extends AbstractController
         foreach($data as $key => $value) {
             if (str_contains($key, 'medicament')) {
                 (int)$id = substr($key, strlen('medicament-'));
-                $ids[$id] = (int)$value;
+                if (isset($ids[$id])) {
+                    $ids[$id] = $ids[$id] + $value;
+                }
+                else {
+                    $ids[$id] = (int)$value;
+                }
             }
         }
         return $ids;
@@ -56,6 +63,7 @@ class VenteController extends AbstractController
     public function store(Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $data = $this->arranegData($request->request->all());
+        dd($data);
         $total = $this->getTotal($data);
         $vente = new Vente();
         $vente->setTotal($total)

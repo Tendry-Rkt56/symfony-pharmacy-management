@@ -16,14 +16,22 @@ class VenteRepository extends ServiceEntityRepository
         parent::__construct($registry, Vente::class);
     }
 
+    public function getSommes ()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT SUM(total) FROM (SELECT total FROM vente ORDER BY id DESC LIMIT 5)";
+        $result = $conn->prepare($sql);
+        return $result->executeQuery();
+    }
+
     public function getSomme()
     {
         return $this->createQueryBuilder("v")
-                    ->select("SUM(v.total)")
+                    ->select("v.total")
                     ->orderBy("v.id", "DESC")
                     ->setMaxResults(5)
                     ->getQuery()
-                    ->getSingleScalarResult();
+                    ->getResult();
     }
 
     public function getLastVente()

@@ -26,7 +26,11 @@ class HomeController extends AbstractController
           $medicaments = $this->entity->getRepository(Medicament::class)->medicamentNumber();
           $categories = $this->entity->getRepository(Category::class)->categoryNumber();
           $users = $this->entity->getRepository(User::class)->userNumber();
-          $total = $this->entity->getRepository(Vente::class)->getSomme();
+          $lastVentes = $this->entity->getRepository(Vente::class)->getSomme();
+          $total = 0;
+          foreach($lastVentes as $vente) {
+               $total += $vente['total'];
+          }
           $ventes = $this->entity->getRepository(Vente::class)->getLastVente();
           return $this->render('admin/home.html.twig', [
                'medicaments' => $medicaments,
@@ -44,7 +48,11 @@ class HomeController extends AbstractController
           $medicaments = $this->entity->getRepository(Medicament::class)->medicamentNumber();
           $categories = $this->entity->getRepository(Category::class)->categoryNumber();
           $users = $this->entity->getRepository(User::class)->userNumber();
-          $total = $this->entity->getRepository(Vente::class)->getSomme();
+          $lastVentes = $this->entity->getRepository(Vente::class)->getSomme();
+          $total = 0;
+          foreach($lastVentes as $vente) {
+               $total += $vente['total'];
+          }
           $ventes = $this->entity->getRepository(Vente::class)->getLastVente();
           return $this->render('users/home.html.twig', [
                'medicaments' => $medicaments,

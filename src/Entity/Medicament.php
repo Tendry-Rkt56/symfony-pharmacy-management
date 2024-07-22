@@ -24,7 +24,7 @@ class Medicament
     private ?string $nom = null;
 
     #[ORM\Column]
-    #[Groups(['medicament.index'])]
+    #[Groups(['medicament.index'])]     
     private ?float $prix = null;
 
     #[ORM\Column]
