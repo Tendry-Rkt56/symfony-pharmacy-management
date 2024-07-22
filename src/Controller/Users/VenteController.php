@@ -63,7 +63,6 @@ class VenteController extends AbstractController
     public function store(Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $data = $this->arranegData($request->request->all());
-        dd($data);
         $total = $this->getTotal($data);
         $vente = new Vente();
         $vente->setTotal($total)
