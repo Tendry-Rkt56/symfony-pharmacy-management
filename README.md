@@ -31,8 +31,8 @@ Ce projet est une adaptation d'un système de gestion de pharmacie existant bas�
 
 - Démarrez le serveur de développement :
     Ouvrir le terminal et naviguez vers le répértoire où vous avez placé le projet et taper la commande :
-    . symfony server:start (recommandé)
-    . php -S localhost:8000 -t public
+    - symfony server:start (recommandé)
+    - php -S localhost:8000 -t public
 
 ## Informations de connexion 
   ### Administrateur
