@@ -36,12 +36,7 @@ class VenteController extends AbstractController
         foreach($data as $key => $value) {
             if (str_contains($key, 'medicament')) {
                 (int)$id = substr($key, strlen('medicament-'));
-                if (isset($ids[$id])) {
-                    $ids[$id] = $ids[$id] + $value;
-                }
-                else {
-                    $ids[$id] = (int)$value;
-                }
+                $ids[$id] = (int)$value;
             }
         }
         return $ids;
