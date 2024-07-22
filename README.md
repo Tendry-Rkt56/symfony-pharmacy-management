@@ -24,7 +24,7 @@ Ce projet est une adaptation d'un système de gestion de pharmacie existant bas�
 
 ## Installation
 - Excécution du Fichier SQL :
-    Pour initialiser votre base de données avec le schéma et les données nécessaires, exécutez le fichier 'projet.sql' situé à la racine du projet dans votre SGBD	 
+    Pour initialiser votre base de données avec le schéma et les données nécessaires, exécutez le fichier 'pharmacies.sql' situé à la racine du projet dans votre SGBD	 
 
 - Configurez votre base de données :
     Modifier le fichier `.env` à la racine du projet et configurez les paramètres de connexion à votre base de données.
