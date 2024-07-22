@@ -155,7 +155,7 @@ class UsersController extends AbstractController
     private function deleteImage (User $user): void
     {
         if ($user->getImage() !== null) {
-            $path = $this->getParameter('kernel.project_dir').'/public/user/'.$user->getImage();
+            $path = $this->getParameter('kernel.project_dir').'/public/users/'.$user->getImage();
             if (file_exists($path)) {
                 unlink($path);
             }
