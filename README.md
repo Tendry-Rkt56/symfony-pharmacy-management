@@ -1,5 +1,5 @@
 # Système de Gestion de Pharmacie avec symfony
-Ce projet est une adaptation d'un système de gestion de pharmacie existant basé sur PHP, maintenant construit avec symfony. Le système permet à un administrateur de gérer les médicaments, les catégories de médicaments, les utilisateurs et les ventes. Les utilisateurs (caissiers) peuvent consulter les médicaments, les catégories et les autres utilisateurs, éditer leurs profils et sont responsables de l'insertion des achats des clients dans la base de donnée.
+Ce projet est une adaptation d'un système de gestion de pharmacie existant basé sur PHP, maintenant construit avec Symfony. Le système permet à un administrateur de gérer les médicaments, les catégories de médicaments, les utilisateurs et les ventes. Les utilisateurs (caissiers) peuvent consulter les médicaments, les catégories et les autres utilisateurs, éditer leurs profils et sont responsables de l'insertion des achats des clients dans la base de donnée.
 
 ## Prérequis
 - PHP 8.2.0 ou supérieur
